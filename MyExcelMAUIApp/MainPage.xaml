@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyExcelMAUIApp.MainPage"
+             Title="Електронні таблиці">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="6" RowSpacing="4">
+
+        <!-- Кнопки керування -->
+        <ScrollView Grid.Row="0" Orientation="Horizontal">
+            <HorizontalStackLayout Spacing="4">
+                <Button Text="Зберегти" Clicked="SaveButton_Clicked" />
+                <Button Text="Прочитати" Clicked="ReadButton_Clicked" />
+                <Button Text="Вийти" Clicked="ExitButton_Clicked" />
+                <Button Text="Порахувати" Clicked="CalculateButton_Clicked" />
+                <Button Text="Довідка" Clicked="HelpButton_Clicked" />
+                <Button Text="Видалити рядок" Clicked="DeleteRowButton_Clicked" />
+                <Button Text="Видалити стовпчик" Clicked="DeleteColumnButton_Clicked" />
+                <Button Text="Додати рядок" Clicked="AddRowButton_Clicked" />
+                <Button Text="Додати стовпчик" Clicked="AddColumnButton_Clicked" />
+                <Button x:Name="ModeButton" Text="Режим: ВИРАЗИ" Clicked="ModeButton_Clicked" />
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!-- Рядок формул -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="8">
+            <Label x:Name="CellNameLabel" Text="—" WidthRequest="60"
+                   FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+            <Entry x:Name="textInput" Grid.Column="1"
+                   Placeholder="Введіть вираз, напр.: mmax(A1, B1, 10) &gt;= C1 + 2 (Enter — підтвердити)"
+                   Completed="FormulaBar_Completed" />
+        </Grid>
+
+        <!-- Стан вибраної клітинки / повідомлення про помилку -->
+        <Label x:Name="StatusLabel" Grid.Row="2" LineBreakMode="WordWrap"
+               Text="Виберіть клітинку та введіть вираз. Довідка — кнопка «Довідка»." />
+
+        <!-- Таблиця -->
+        <ScrollView Grid.Row="3" Orientation="Both">
+            <Grid x:Name="grid" ColumnSpacing="1" RowSpacing="1" />
+        </ScrollView>
+    </Grid>
+</ContentPage>
