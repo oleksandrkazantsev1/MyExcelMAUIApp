@@ -20,7 +20,6 @@ namespace MyExcelMAUIApp
         private string _currentFileName = "таблиця";
 
         private readonly ISpreadsheetStorage _localStorage = new LocalFileStorage();
-        private readonly ISpreadsheetStorage _driveStorage = new GoogleDriveStorage();
 
         private const string HelpMessage =
             "Лабораторна робота № 1. Розробка програми для роботи з електронними таблицями.\n" +
@@ -38,7 +37,7 @@ namespace MyExcelMAUIApp
             "Обробка двоетапна: 1) синтаксична перевірка, 2) обчислення " +
             "(ділення на нуль, циклічні посилання, невідомі клітинки, невідповідність типів).\n\n" +
             "«Порахувати» — перерахувати таблицю, увімкнути режим значень і показати список помилок.\n" +
-            "«Зберегти»/«Прочитати» — файл на локальному диску (Документи\\MyExcelMAUIApp) або на Google Drive.\n" +
+            "«Зберегти»/«Прочитати» — файл на локальному диску (Документи\\MyExcelMAUIApp).\n" +
             "Кнопки додавання/видалення працюють з останнім рядком або стовпчиком.";
 
         public MainPage()
@@ -269,14 +268,8 @@ namespace MyExcelMAUIApp
             await DisplayAlert("Знайдено помилки", $"Кількість помилок: {errors.Count}\n\n{list}", "OK");
         }
 
-        private async Task<ISpreadsheetStorage?> ChooseStorageAsync(string title)
-        {
-            string choice = await DisplayActionSheet(
-                title, "Скасувати", null, _localStorage.DisplayName, _driveStorage.DisplayName);
-            if (choice == _localStorage.DisplayName) return _localStorage;
-            if (choice == _driveStorage.DisplayName) return _driveStorage;
-            return null;
-        }
+        private Task<ISpreadsheetStorage?> ChooseStorageAsync(string title) =>
+           Task.FromResult<ISpreadsheetStorage?>(_localStorage);
 
         private async Task SaveAsync()
         {
